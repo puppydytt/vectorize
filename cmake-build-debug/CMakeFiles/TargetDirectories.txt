@@ -1,3 +1,0 @@
-C:/vectorize/cmake-build-debug/CMakeFiles/vectorize.dir
-C:/vectorize/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/vectorize/cmake-build-debug/CMakeFiles/rebuild_cache.dir
