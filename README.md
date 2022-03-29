@@ -14,10 +14,11 @@
 #include "vector/vector.h"
 
 int main(int argc, char ** argv) {
-    //goes creation of inted vector
+    //goes creation of INT typed vector
     vector_int vectrInt = initializeInt();
     
-       for (int i = 0; i < 10; i++) {
+    //pushing components to vector
+    for (int i = 0; i < 10; i++) {
         pushInt(&vectrInt, i);
     }
 
