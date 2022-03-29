@@ -12,9 +12,15 @@ stdio.h
 vector/vector.h
 C:/vectorize/vector/vector.h
 
+C:/vectorize/vector/vector.c
+vector.h
+C:/vectorize/vector/vector.h
+
 C:/vectorize/vector/vector.h
 stdlib.h
 -
 stdio.h
+-
+string.h
 -
 

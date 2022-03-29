@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #ifndef VECTORIZE_VECTOR_H
 #define VECTORIZE_VECTOR_H

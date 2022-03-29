@@ -1,54 +1,73 @@
 #include <stdio.h>
 #include "vector/vector.h"
 
-void a(void * test) {
-    void ** ptr2 = test;
-
-    //explanation when you passing (structure, char *, array) you're passing the address pointing to first element in it.
-    //as it's void type compiler does not how to represent this memory in my case I stored the "mem" address to double ptr.
-    //this instruction tells the compiler that the initial pointer of first element in struct points to other address that points to value
-
-    ///ILLUSTRATION
-    //struct abc = {1, 2, 3}
-    //&abc -> points to address that stores 1(as it's first element in struct)
-    //if you'll store that address in double pointer compiler will interpret the value of it's address as other address
-    //it will grab 8 bytes of memory that stores in address &abc, because the address size is 8 bytes
-    //tyring to reference the address that stores in double pointer through *ptr, will give you address, for the struct it will be 0x 02 00 00 00 03
-    //as you can see it's grabbed 8bytes starting from initial address and compiler represented it as address that can be referenced with **ptr;
-    //why this address has value not 0x03 00 00 00 02, because INTEL processor stores it as little endian, so address is reverse
-
-    //0x6ef04--> 0x050403 -> value;
-
-
-}
-
-
-
 
 int main() {
-    vector_string abc = initializeString();
+    //init section
+    vector_int vectrInt = initializeInt();
+    vector_char vectrChar = initializeChar();
+    vector_string vectrString = initializeString();
+    vector_double vectorDouble = initializeDouble();
 
-    typedef struct {
-        int a;
-        int b;
-        int c;
-    } cb;
+    //filling up vector
+    for (int i = 0; i < 10; i++) {
+        pushInt(&vectrInt, i);
+    }
 
-    cb test = {3, 2, 3};
+    //changing component of vector by index
+    vectrInt.address[0] = 10;
+    pop(&vectrInt); //pops out last element of vector [LIFO structure]
 
-    a(&test);
+    //printing vector
+    outInt(&vectrInt);
+    printf("End of vector int section\n");
+
+    for (char i = 58; i < 68; i++) {
+        pushChar(&vectrChar, i);
+    }
+
+    vectrChar.address[0] = 69;
+    vectrChar.address[1] = 70;
+
+    outChar(&vectrChar);
+
+    printf("End of vector char section\n");
+
+    for (double i = 0.0; i < 1; i += 0.1) {
+        pushDouble(&vectorDouble, i);
+    }
+
+
+    pop(&vectorDouble);
+
+    vectorDouble.address[1] = 127.50; //assigning value to specific component of the vector
+
+    outDouble(&vectorDouble);
 
 
 
-    pushString(&abc, "blyat");
-    pushString(&abc, "suka");
-    pushString(&abc, "pidor");
-    pushString(&abc, "hui putin suka");
-    pushString(&abc, "cba");
+    //end of vector double example section
+    printf("End of vector double section\n");
 
 
-    pop(&abc);
-    outString(&abc);
+    pushString(&vectrString, "who");
+    pushString(&vectrString, "cares");
+    pushString(&vectrString, "about");
+    pushString(&vectrString, "this");
+    pushString(&vectrString, "text");
+    pushString(&vectrString, "longlonglonglonglonglonglonglonglonglonglonglonglonglonglong................");
+
+    vectrString.address[0][0] = 'h';
+    vectrString.address[0][1] = 'u';
+    vectrString.address[0][2] = 'i';
+
+
+    pop(&vectrString);
+    pop(&vectrString);
+    outString(&vectrString);
+
+    printf("End of vector string section\n");
+
 
     return 0;
 }

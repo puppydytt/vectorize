@@ -26,8 +26,6 @@ void pushInt(vector_int *mem, const int value) {
         }
         mem->address[mem->length] = value;
     }
-    /*   printf("element  = %d\n", (mem->address[mem->length]));
-       printf("address  = %p\n", &(mem->address[mem->length]));*/
     mem->length += 1;
 }
 
@@ -41,8 +39,6 @@ void pushDouble(vector_double *mem, const double value) {
         }
         mem->address[mem->length] = value;
     }
-    /*   printf("element  = %d\n", (mem->address[mem->length]));
-       printf("address  = %p\n", &(mem->address[mem->length]));*/
     mem->length += 1;
 }
 
@@ -56,20 +52,22 @@ void pushChar(vector_char *mem, const char value) {
         }
         mem->address[mem->length] = value;
     }
-    /*   printf("element  = %d\n", (mem->address[mem->length]));
-       printf("address  = %p\n", &(mem->address[mem->length]));*/
     mem->length += 1;
 }
 
 void pushString(vector_string *mem, char *value) {
-    if (mem->length == 0) (mem->address)[0] = value;
+    ///quick reference when you pass simple string as argument like func("argument"). The string "argument" goes  to .rodata section and when you're trying to change it processor have protection for this section and program crashes so below goes allocation mem and cpy there string form .rodata section
+    char * cpyOfString = calloc(strlen(value), sizeof(char));
+    strcpy(cpyOfString, value);
+
+    if (mem->length == 0) (mem->address)[0] = cpyOfString;
     else {
         mem->address = realloc(mem->address, (mem->length + 1) * sizeof(char *));
         if (mem->address == NULL) {
             printf("Allocated mem failed on %d", mem->length);
             exit(198385);
         }
-        mem->address[mem->length] = value;
+        mem->address[mem->length] = cpyOfString;
     }
     mem->length += 1;
 }
@@ -97,7 +95,7 @@ void pop(void *restrict mem) {
         return;
     }
     (*(uint_32 *) (mem + 12)) -= 1;
-    mem = realloc(*pVoid, (*(uint_32 *) (mem + 12)) * sizeOfLocatedElement);
+    *pVoid = realloc(*pVoid, (*(uint_32 *) (mem + 12)) * sizeOfLocatedElement);
 }
 
 void outInt(vector_int *layout) {
